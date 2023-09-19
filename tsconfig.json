@@ -21,7 +21,7 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "src",
     "paths": {
-      "@shared/*":["shared/components/*"]
+      "@my-shared/components/*":["shared/components/partials/*"]
     }
   },
   "include": ["src"],
