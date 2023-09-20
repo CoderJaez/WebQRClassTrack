@@ -1,7 +1,38 @@
 import React from "react";
+import { NavLink, AppShell } from "@mantine/core";
+import {
+  Gauge,
+  Chalkboard,
+  Dashboard,
+  FileStack,
+  User,
+} from "tabler-icons-react";
 
-function SideNav() {
-  return <div></div>;
-}
+const SideNav: React.FC = () => {
+  return (
+    <AppShell.Navbar p="md">
+      <NavLink
+        label="Dashboard"
+        leftSection={<Dashboard size="1rem" strokeWidth={1.5} />}
+      />
+      <NavLink
+        label="Occupancy"
+        leftSection={<Gauge size="1rem" strokeWidth={1.5} />}
+      />
+      <NavLink
+        label="Reservation"
+        leftSection={<FileStack size="1rem" strokeWidth={1.5} />}
+      />
+      <NavLink
+        label="Classroom"
+        leftSection={<Chalkboard size="1rem" strokeWidth={1.5} />}
+      />
+      <NavLink
+        label="User"
+        leftSection={<User size="1rem" strokeWidth={1.5} />}
+      />
+    </AppShell.Navbar>
+  );
+};
 
 export default SideNav;

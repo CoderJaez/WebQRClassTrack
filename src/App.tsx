@@ -1,10 +1,17 @@
 import React from "react";
-import Header from "@my-shared/components/Header";
+import AdminLayout from "@shared/layouts/AdminLayout";
+import "@mantine/core/styles.css";
+import { MantineProvider, createTheme } from "@mantine/core";
+const theme = createTheme({
+  fontFamily: "Poppins,Open Sans, sans-serif",
+  primaryColor: "cyan",
+});
+
 const App: React.FC = () => {
   return (
-    <div>
-      <Header />
-    </div>
+    <MantineProvider theme={theme}>
+      <AdminLayout />
+    </MantineProvider>
   );
 };
 

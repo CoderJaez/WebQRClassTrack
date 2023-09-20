@@ -21,7 +21,14 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "src",
     "paths": {
-      "@my-shared/components/*":["shared/components/partials/*"]
+      "@shared/components/*":["shared/components/partials/*","shared/components/partials"],
+      "@shared/layouts/*":["shared/components/layouts/*","shared/components/layouts"],
+      "@assets/*":["assets/*"],
+      "@pages/*":["pages/*", "pages"],
+      "@components/*":["components/*"],
+      "@routes/*":["routes/*"],
+      "@services/*":["services/*"],
+      "@hooks/*":["hooks/*"],
     }
   },
   "include": ["src"],
