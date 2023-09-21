@@ -16,7 +16,7 @@ import {
 import { Route } from "types";
 
 const routes: Omit<Route, "leftSection" | "rightSection">[] = [
-  { label: "Dashboard", path: "/", component: <DashboardPage /> },
+  { label: "Dashboard", path: "/dashboard", component: <DashboardPage /> },
   { label: "Occupancy", path: "/occupancies", component: <OccupancyPage /> },
   {
     label: "Reservation",
@@ -30,7 +30,7 @@ const routes: Omit<Route, "leftSection" | "rightSection">[] = [
 export const navLinks: Omit<Route, "component" | "rightSection">[] = [
   {
     label: "Dashboard",
-    path: "/",
+    path: "/dashboard",
     leftSection: <Dashboard size="1rem" strokeWidth={1.5} />,
   },
   {

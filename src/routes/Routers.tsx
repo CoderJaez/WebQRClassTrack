@@ -10,12 +10,13 @@ const Routers: React.FC = () => {
   return (
     <>
       <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route element={<AdminLayout />}>
           {routes.map((route, index) => (
             <Route key={index} path={route.path} element={route.component} />
           ))}
         </Route>
-        <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>

@@ -11,6 +11,7 @@ const SideNav: React.FC = () => {
     <AppShell.Navbar>
       {navLinks.map((nav, index) => (
         <NavLink
+          key={index}
           label={nav.label}
           leftSection={nav.leftSection}
           active={index === active}
