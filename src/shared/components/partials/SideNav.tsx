@@ -13,22 +13,27 @@ const SideNav: React.FC = () => {
     <AppShell.Navbar p="md">
       <NavLink
         label="Dashboard"
+        href="/"
         leftSection={<Dashboard size="1rem" strokeWidth={1.5} />}
       />
       <NavLink
         label="Occupancy"
+        href="/occupancies"
         leftSection={<Gauge size="1rem" strokeWidth={1.5} />}
       />
       <NavLink
         label="Reservation"
+        href="/reservations"
         leftSection={<FileStack size="1rem" strokeWidth={1.5} />}
       />
       <NavLink
         label="Classroom"
+        href="/classrooms"
         leftSection={<Chalkboard size="1rem" strokeWidth={1.5} />}
       />
       <NavLink
         label="User"
+        href="/users"
         leftSection={<User size="1rem" strokeWidth={1.5} />}
       />
     </AppShell.Navbar>

@@ -1,6 +1,16 @@
-import Dashboard from "./Dashboard";
-import User from "./User";
-import Occupancy from "./Occupancy";
-import Reservation from "./Reservation";
-import Classroom from "./Classroom";
-export { Dashboard, Occupancy, Reservation, Classroom, User };
+import DashboardPage from "./DashboardPage";
+import UserPage from "./UserPage";
+import OccupancyPage from "./OccupancyPage";
+import ReservationPage from "./ReservationPage";
+import ClassroomPage from "./ClassroomPage";
+import LoginPage from "./LoginPage";
+import NotFoundPage from "./NotFoundPage";
+export {
+  NotFoundPage,
+  LoginPage,
+  DashboardPage,
+  OccupancyPage,
+  ReservationPage,
+  ClassroomPage,
+  UserPage,
+};

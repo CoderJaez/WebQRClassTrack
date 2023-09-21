@@ -1,6 +1,6 @@
 import React from "react";
 
-const Classroom: React.FC = () => {
+const ClassroomPage: React.FC = () => {
   return (
     <div>
       <h1>Classroom</h1>
@@ -8,4 +8,4 @@ const Classroom: React.FC = () => {
   );
 };
 
-export default Classroom;
+export default ClassroomPage;

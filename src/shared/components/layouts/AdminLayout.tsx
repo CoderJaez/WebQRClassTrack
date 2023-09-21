@@ -2,6 +2,7 @@ import React from "react";
 import { Header, SideNav } from "../partials";
 import { AppShell } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { Outlet } from "react-router-dom";
 const AdminLayout: React.FC = () => {
   const [opened, { toggle }] = useDisclosure();
 
@@ -12,6 +13,9 @@ const AdminLayout: React.FC = () => {
     >
       <Header opened={opened} toggle={toggle} />
       <SideNav />
+      <AppShell.Main>
+        <Outlet />
+      </AppShell.Main>
     </AppShell>
   );
 };

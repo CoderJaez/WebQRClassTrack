@@ -1,7 +1,7 @@
 import React from "react";
-import AdminLayout from "@shared/layouts/AdminLayout";
 import "@mantine/core/styles.css";
 import { MantineProvider, createTheme } from "@mantine/core";
+import Routers from "@routes/Routers";
 const theme = createTheme({
   fontFamily: "Poppins,Open Sans, sans-serif",
   primaryColor: "cyan",
@@ -10,7 +10,7 @@ const theme = createTheme({
 const App: React.FC = () => {
   return (
     <MantineProvider theme={theme}>
-      <AdminLayout />
+      <Routers />
     </MantineProvider>
   );
 };
