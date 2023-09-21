@@ -1,5 +1,5 @@
 import React from "react";
-import { Header, SideNav } from "../partials";
+import { Header, SideNav, Footer } from "../partials";
 import { AppShell } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Outlet } from "react-router-dom";
@@ -16,6 +16,7 @@ const AdminLayout: React.FC = () => {
       <AppShell.Main>
         <Outlet />
       </AppShell.Main>
+      <Footer />
     </AppShell>
   );
 };

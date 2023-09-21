@@ -1,41 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, AppShell } from "@mantine/core";
-import {
-  Gauge,
-  Chalkboard,
-  Dashboard,
-  FileStack,
-  User,
-} from "tabler-icons-react";
+import { useNavigate } from "react-router-dom";
+import { navLinks } from "@routes/routes";
 
 const SideNav: React.FC = () => {
+  const navigate = useNavigate();
+  const [active, setActive] = useState(0);
+
   return (
-    <AppShell.Navbar p="md">
-      <NavLink
-        label="Dashboard"
-        href="/"
-        leftSection={<Dashboard size="1rem" strokeWidth={1.5} />}
-      />
-      <NavLink
-        label="Occupancy"
-        href="/occupancies"
-        leftSection={<Gauge size="1rem" strokeWidth={1.5} />}
-      />
-      <NavLink
-        label="Reservation"
-        href="/reservations"
-        leftSection={<FileStack size="1rem" strokeWidth={1.5} />}
-      />
-      <NavLink
-        label="Classroom"
-        href="/classrooms"
-        leftSection={<Chalkboard size="1rem" strokeWidth={1.5} />}
-      />
-      <NavLink
-        label="User"
-        href="/users"
-        leftSection={<User size="1rem" strokeWidth={1.5} />}
-      />
+    <AppShell.Navbar>
+      {navLinks.map((nav, index) => (
+        <NavLink
+          label={nav.label}
+          leftSection={nav.leftSection}
+          active={index === active}
+          onClick={() => {
+            setActive(index);
+            navigate(nav.path);
+          }}
+          color="green"
+          variant="filled"
+        />
+      ))}
     </AppShell.Navbar>
   );
 };
