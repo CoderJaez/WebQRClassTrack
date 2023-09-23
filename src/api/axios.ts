@@ -11,7 +11,7 @@ export default axios.create({
 
 export const axiosPrivate = axios.create({
   baseURL: dev_url,
-  timeout: 3000,
+  timeout: 5000,
   headers: { "Content-Type": "application/json" },
-  withCredentials: true,
+  // withCredentials: true,
 });
