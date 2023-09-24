@@ -12,6 +12,7 @@ import {
 import React, { forwardRef } from "react";
 import logo from "@assets/logo.png";
 import { User, Password, ChevronRight, Logout } from "tabler-icons-react";
+import useAuthStore from "store/auth";
 type props = {
   opened: boolean;
   toggle: () => void;
@@ -53,6 +54,7 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
   ),
 );
 const Header: React.FC<props> = ({ opened, toggle }) => {
+  const { user } = useAuthStore();
   return (
     <AppShell.Header>
       <Flex justify="space-between" align="center">
@@ -69,9 +71,9 @@ const Header: React.FC<props> = ({ opened, toggle }) => {
           <Menu shadow="md">
             <Menu.Target>
               <UserButton
-                image="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80"
-                name="Harriette Spoonlicker"
-                email="hspoonlicker@outlook.com"
+                image={user?.image_path as string}
+                name={`${user?.firstname.toLocaleUpperCase()} ${user?.middlename.toLocaleUpperCase()} ${user?.lastname.toLocaleUpperCase()}`}
+                email={user?.email as string}
               />
             </Menu.Target>
             <Menu.Dropdown style={{ minWidth: 200 }}>
