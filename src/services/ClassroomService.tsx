@@ -2,6 +2,9 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import React, { useState } from "react";
 import { Classroom, Response } from "../types";
 
+interface ClassroomResponse extends Response {
+  data: Classroom[] | Classroom | null;
+}
 const useClassroom = () => {
   const [loading, setLoading] = useState(false);
   const axiosPrivate = useAxiosPrivate();
@@ -52,11 +55,11 @@ const useClassroom = () => {
   //   axiosPrivate.get
   // }
 
-  const getClassroom = async () => {
+  const getClassroom = async (search: string) => {
     return await new Promise<Classroom[]>((resolve, reject) => {
       setLoading(true);
       axiosPrivate
-        .get("/classrooms")
+        .get(`classrooms?roomNo=${search}`)
         .then((res) => {
           const result: Classroom[] = res.data;
           resolve(result);
@@ -81,12 +84,86 @@ const useClassroom = () => {
     });
   };
 
+  const addClassroom = async (roomNo: string) => {
+    setLoading(true);
+    return await new Promise<ClassroomResponse>((resolve, reject) => {
+      axiosPrivate
+        .post("classrooms", { roomNo: roomNo })
+        .then((res) => {
+          const result = {
+            status: res.status,
+            data: res.data.data as Classroom,
+            message: res.data.message,
+          };
+          resolve(result);
+        })
+        .catch((err) => {
+          const result = {
+            status: err.response.status,
+            data: null,
+            message: err.response.data.message,
+          };
+          reject(result);
+        })
+        .finally(() => setLoading(false));
+    });
+  };
+
+  const updateClassroom = async (roomNo: string, id: string) => {
+    setLoading(true);
+    return await new Promise<Response>((resolve, reject) => {
+      axiosPrivate
+        .put(`classrooms/${id}`, { roomNo: roomNo })
+        .then((res) => {
+          const result = {
+            status: res.status,
+            message: res.data.message,
+          };
+          resolve(result);
+        })
+        .catch((err) => {
+          const result = {
+            status: err.response.status,
+            message: err.response.data.message,
+          };
+          reject(result);
+        })
+        .finally(() => setLoading(false));
+    });
+  };
+
+  const removeClassroom = async (id: string) => {
+    setLoading(true);
+    return await new Promise<Response>((resolve, reject) => {
+      axiosPrivate
+        .delete(`classrooms/${id}`)
+        .then((res) => {
+          const result = {
+            status: res.status,
+            message: res.data.message,
+          };
+          resolve(result);
+        })
+        .catch((err) => {
+          const result = {
+            status: err.response.status,
+            message: err.response.data.message,
+          };
+          reject(result);
+        })
+        .finally(() => setLoading(false));
+    });
+  };
+
   return {
     occupyRoom,
     getClassroom,
     getOccupiedClassroom,
     vacateRoom,
     loading,
+    updateClassroom,
+    addClassroom,
+    removeClassroom,
   };
 };
 

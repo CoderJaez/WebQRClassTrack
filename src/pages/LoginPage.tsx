@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 const LoginPage: React.FC = () => {
   const { login } = useAuthStore();
   const navigate = useNavigate();
-  const form = useForm<Omit<User, "_id" | "role">>({
+  const form = useForm<Omit<User, "id" | "role">>({
     validateInputOnChange: true,
     initialValues: {
       email: "",
@@ -55,7 +55,7 @@ const LoginPage: React.FC = () => {
       />
       <Title>Welcome back!</Title>
 
-      <form onSubmit={form.onSubmit(onSubmitHandler)}>
+      <form onSubmit={form.onSubmit(onSubmitHandler as any)}>
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
           <TextInput
             label="Email"

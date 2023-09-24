@@ -19,11 +19,11 @@ const routes: Omit<Route, "leftSection" | "rightSection">[] = [
   { label: "Dashboard", path: "/dashboard", component: <DashboardPage /> },
   { label: "Occupancy", path: "/occupancies", component: <OccupancyPage /> },
   {
-    label: "Reservation",
+    label: "Reservations",
     path: "/reservations",
     component: <ReservationPage />,
   },
-  { label: "Classroom", path: "/classrooms", component: <ClassroomPage /> },
+  { label: "Classrooms", path: "/classrooms", component: <ClassroomPage /> },
   { label: "User", path: "/users", component: <UserPage /> },
 ];
 
@@ -34,17 +34,17 @@ export const navLinks: Omit<Route, "component" | "rightSection">[] = [
     leftSection: <Dashboard size="1rem" strokeWidth={1.5} />,
   },
   {
-    label: "Occupancy",
+    label: "Occupancies",
     path: "/occupancies",
     leftSection: <Dashboard size="1rem" strokeWidth={1.5} />,
   },
   {
-    label: "Reservation",
+    label: "Reservations",
     path: "/reservations",
     leftSection: <FileStack size="1rem" strokeWidth={1.5} />,
   },
   {
-    label: "Classroom",
+    label: "Classrooms",
     path: "/classrooms",
     leftSection: <Chalkboard size="1rem" strokeWidth={1.5} />,
   },
