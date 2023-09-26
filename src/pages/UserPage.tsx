@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import {
   Container,
@@ -13,15 +13,24 @@ import {
   TextInput,
   Select,
   Stack,
+  Avatar,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { UserInfo } from "types";
 import useUser from "@services/UserService";
+import useUserStore from "store/user.store";
+import ActionButtons from "@components/utils/ActionButtons";
 
 const UserPage: React.FC = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  const { loading, addUser } = useUser();
+  const { loading, addUser, getUsers } = useUser();
+  const { users, add, setUsers, remove } = useUserStore();
+  const [search, setSearch] = useState("");
+
+  const fetchData = async () => {
+    await getUsers(search).then((res) => setUsers(res));
+  };
 
   const handleSubmit = async (values: Omit<UserInfo, "id" | "image_path">) => {
     //Do nothing yet.
@@ -39,6 +48,14 @@ const UserPage: React.FC = () => {
         }
       });
   };
+
+  const editUser = (id: string) => {};
+
+  const deleteUser = (id: string) => {};
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const form = useForm<Omit<UserInfo, "id" | "image_path">>({
     validateInputOnChange: true,
@@ -118,6 +135,22 @@ const UserPage: React.FC = () => {
                 <Table.Th>Action</Table.Th>
               </Table.Tr>
             </Table.Thead>
+            <Table.Tbody>
+              {users.map((user, index) => (
+                <Table.Tr key={index}>
+                  <Table.Td>
+                    <Avatar src={user.image_path} size="md" />
+                  </Table.Td>
+                  <Table.Td>{`${user.firstname.toUpperCase} ${
+                    user.middlename ?? user.middlename
+                  } ${user.lastname.toUpperCase}`}</Table.Td>
+                  <Table.Td>{user.contact_no}</Table.Td>
+                  <Table.Td>{user.email}</Table.Td>
+                  <Table.Td>{user.role}</Table.Td>
+                  <Table.Td></Table.Td>
+                </Table.Tr>
+              ))}
+            </Table.Tbody>
           </Table>
         </Table.ScrollContainer>
       </Card>

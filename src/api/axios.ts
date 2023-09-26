@@ -1,6 +1,6 @@
 import axios from "axios";
 const localhost = "10.0.2.2";
-const network_ip = "192.168.1.108";
+const network_ip = "127.0.0.1";
 const dev_url = `http://${network_ip}:3000/api/v1/`;
 const live_url = "https://qrclass-api.onrender.com/api/v1/";
 

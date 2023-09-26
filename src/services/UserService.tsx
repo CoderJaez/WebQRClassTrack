@@ -12,6 +12,20 @@ const useUser = () => {
   const [loading, setLoading] = useState(false);
   const axios = useAxiosPrivate();
 
+  const getUsers = async (search: string) => {
+    return await new Promise<UserInfo[]>((resolve, reject) => {
+      axios
+        .get(`users?search=${search}`)
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => {
+          console.log("Error:", err);
+          reject([]);
+        });
+    });
+  };
+
   const addUser = async (values: Omit<UserInfo, "id" | "image_path">) => {
     setLoading(true);
     const value = { ...values, ...{ role: values.role.toLowerCase() } };
@@ -41,6 +55,7 @@ const useUser = () => {
   return {
     loading,
     addUser,
+    getUsers,
   };
 };
 
