@@ -9,7 +9,7 @@ export interface Route {
 }
 
 export interface User {
-  id: string;
+  _id: string;
   email: string;
   password: string;
   role: string;
@@ -56,4 +56,14 @@ export interface Classroom {
 export interface QrCode {
   type: string;
   code: string;
+}
+
+export interface Occupancy {
+  _id: string;
+  instructor: string;
+  image_path: string;
+  roomNo: string;
+  isVacant: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

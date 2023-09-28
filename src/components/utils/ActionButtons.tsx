@@ -3,12 +3,11 @@ import React from "react";
 import { Edit, Trash } from "tabler-icons-react";
 
 interface ActionProps {
-  id: string;
-  edit: (id: string) => void;
-  remove: (id: string) => void;
+  onEdit: () => void;
+  onDelete: () => void;
 }
 
-const ActionButtons: React.FC<ActionProps> = ({ id, edit, remove }) => {
+const ActionButtons: React.FC<ActionProps> = ({ onEdit, onDelete }) => {
   return (
     <>
       <Group justify="row">
@@ -16,7 +15,7 @@ const ActionButtons: React.FC<ActionProps> = ({ id, edit, remove }) => {
           variant="filled"
           color="yellow"
           aria-label="edit"
-          onClick={() => edit}
+          onClick={onEdit}
         >
           <Edit style={{ width: "70%", height: "70%" }} strokeWidth={1.5} />
         </ActionIcon>
@@ -24,7 +23,7 @@ const ActionButtons: React.FC<ActionProps> = ({ id, edit, remove }) => {
           variant="filled"
           color="red"
           aria-label="delete"
-          onClick={() => remove}
+          onClick={onDelete}
         >
           <Trash style={{ width: "70%", height: "70%" }} strokeWidth={1.5} />
         </ActionIcon>

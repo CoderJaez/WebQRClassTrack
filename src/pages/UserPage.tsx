@@ -21,50 +21,121 @@ import { UserInfo } from "types";
 import useUser from "@services/UserService";
 import useUserStore from "store/user.store";
 import ActionButtons from "@components/utils/ActionButtons";
+import { ConfirmationDialog } from "@components/utils";
 
 const UserPage: React.FC = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  const { loading, addUser, getUsers } = useUser();
+  const { loading, addUser, updateUser, getUsers, removeUser } = useUser();
+  const [userId, setUserId] = useState<null | string>(null);
   const { users, add, setUsers, remove } = useUserStore();
+  const [isConfirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
   const [search, setSearch] = useState("");
 
   const fetchData = async () => {
-    await getUsers(search).then((res) => setUsers(res));
+    await getUsers(search).then((res) => {
+      setUsers(res);
+    });
   };
 
-  const handleSubmit = async (values: Omit<UserInfo, "id" | "image_path">) => {
-    //Do nothing yet.
-    await addUser(values)
+  const handleCloseConfirmationDialog = () => {
+    setConfirmationDialogOpen(false);
+  };
+
+  const handleConfirmAction = async () => {
+    await removeUser(userId as string)
       .then((res) => {
         toast.success(res.message as string);
+        remove(userId as string);
       })
       .catch((err) => {
-        if (err.status === 400) {
-          err.message.forEach((msg: any) =>
-            form.setFieldError(msg.field, msg.message),
-          );
-        } else {
-          toast.error(err.message as string);
-        }
+        toast.error(err.message);
       });
+
+    handleCloseConfirmationDialog();
   };
 
-  const editUser = (id: string) => {};
+  const onSearchHandler = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      fetchData();
+    }
+  };
 
-  const deleteUser = (id: string) => {};
+  const handleSubmit = async (
+    values: Omit<UserInfo, "_id" | "image_path" | "password">,
+  ) => {
+    try {
+      if (!userId) {
+        await addUser(values)
+          .then((res) => {
+            toast.success(res.message as string);
+            add(res.user as UserInfo);
+          })
+          .catch((err) => {
+            if (err.status === 400) {
+              err.message.forEach((msg: any) =>
+                form.setFieldError(msg.field, msg.message),
+              );
+            } else {
+              toast.error(err.message as string);
+            }
+          });
+      } else {
+        await updateUser(userId, values)
+          .then((res) => {
+            toast.success(res.message as string);
+            const updatedUser = {
+              ...values,
+              ...{ _id: userId as string },
+            } as UserInfo;
+            const updatedUsers = users.map((user) =>
+              user._id === userId ? updatedUser : user,
+            );
+            setUsers(updatedUsers);
+            setUserId(null);
+          })
+          .catch((err) => {
+            if (err.status === 400) {
+              err.message.forEach((msg: any) =>
+                form.setFieldError(msg.field, msg.message),
+              );
+            } else {
+              toast.error(err.message as string);
+            }
+          });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const editUser = (id: string) => {
+    const user = users.find((user) => user._id === id) as UserInfo;
+    setUserId(id as string);
+    form.setFieldValue("firstname", user.firstname);
+    form.setFieldValue("middlename", user.middlename);
+    form.setFieldValue("lastname", user.lastname);
+    form.setFieldValue("email", user.email);
+    form.setFieldValue("contact_no", user.contact_no);
+    form.setFieldValue("role", user.role.toUpperCase());
+    open();
+  };
+
+  const deleteUser = (id: string) => {
+    setUserId(id);
+    setConfirmationDialogOpen(true);
+  };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  const form = useForm<Omit<UserInfo, "id" | "image_path">>({
+  const form = useForm<Omit<UserInfo, "_id" | "image_path" | "password">>({
     validateInputOnChange: true,
     initialValues: {
       firstname: "",
       middlename: "",
       lastname: "",
       email: "",
-      password: "",
       role: "",
       contact_no: "",
     },
@@ -95,12 +166,7 @@ const UserPage: React.FC = () => {
           : !/^\S+@\S+$/.test(value)
           ? "Invalid email"
           : null,
-      password: (value) =>
-        value === undefined || value.trim() === ""
-          ? "Password is required"
-          : value.length < 8
-          ? "Must at least 8 characters"
-          : null,
+
       role: (value) =>
         value === undefined || value === null ? "User Type is required" : null,
     },
@@ -109,17 +175,31 @@ const UserPage: React.FC = () => {
   return (
     <Container fluid p="lg">
       <ToastContainer />
+      <ConfirmationDialog
+        open={isConfirmationDialogOpen}
+        onClose={handleCloseConfirmationDialog}
+        onConfirm={handleConfirmAction}
+        title="Delete Confirmation"
+        message="Are you sure you want to proceed?"
+      />
       <Card shadow="sm" p="md" radius="sm">
         <Card.Section>
           <Title order={2} p="sm">
             Users
           </Title>
           <Group justify="space-between" m="md">
-            <Button onClick={open}>Add new user</Button>
+            <Button
+              onClick={() => {
+                form.reset();
+                open();
+              }}
+            >
+              Add new user
+            </Button>
             <TextInput
               placeholder="Search"
-              // onKeyDown={onSearchHandler}
-              // onChange={(e: any) => setSearch(e.target.value)}
+              onKeyDown={onSearchHandler}
+              onChange={(e: any) => setSearch(e.target.value)}
             />
           </Group>
         </Card.Section>
@@ -141,13 +221,18 @@ const UserPage: React.FC = () => {
                   <Table.Td>
                     <Avatar src={user.image_path} size="md" />
                   </Table.Td>
-                  <Table.Td>{`${user.firstname.toUpperCase} ${
+                  <Table.Td>{`${user.firstname.toUpperCase()} ${
                     user.middlename ?? user.middlename
-                  } ${user.lastname.toUpperCase}`}</Table.Td>
+                  } ${user.lastname.toUpperCase()}`}</Table.Td>
                   <Table.Td>{user.contact_no}</Table.Td>
                   <Table.Td>{user.email}</Table.Td>
                   <Table.Td>{user.role}</Table.Td>
-                  <Table.Td></Table.Td>
+                  <Table.Td>
+                    <ActionButtons
+                      onEdit={() => editUser(user._id)}
+                      onDelete={() => deleteUser(user._id)}
+                    />
+                  </Table.Td>
                 </Table.Tr>
               ))}
             </Table.Tbody>
@@ -185,14 +270,14 @@ const UserPage: React.FC = () => {
               placeholder="Eg. youremail@gmail.com"
               {...form.getInputProps("email")}
             />
-            <PasswordInput
+            {/* <PasswordInput
               label="Password"
               placeholder="Enter password"
               {...form.getInputProps("password")}
-            />
+            /> */}
             <Select
               label="User type"
-              data={["Admin", "Instructor"]}
+              data={["ADMIN", "INSTRUCTOR"]}
               {...form.getInputProps("role")}
             />
             <Button type="submit" loading={loading}>

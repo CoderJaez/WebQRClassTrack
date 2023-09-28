@@ -13,7 +13,7 @@ const useUserStore = create<UserState>()((set) => ({
   add: (value: UserInfo) =>
     set((state) => ({ users: [value, ...state.users] })),
   remove: (id: string) =>
-    set((state) => ({ users: state.users.filter((user) => user.id !== id) })),
+    set((state) => ({ users: state.users.filter((user) => user._id !== id) })),
   setUsers: (values: UserInfo[]) => set(() => ({ users: values })),
 }));
 

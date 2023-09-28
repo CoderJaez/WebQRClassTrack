@@ -149,7 +149,7 @@ const ClassroomPage: React.FC = () => {
         <ActionIcon
           variant="filled"
           color="red"
-          aria-label="edit"
+          aria-label="delete"
           onClick={() => {
             setClassroom(
               classrooms.find((room) => room._id === id) as Classroom,
@@ -179,7 +179,7 @@ const ClassroomPage: React.FC = () => {
         open={isConfirmationDialogOpen}
         onClose={handleCloseConfirmationDialog}
         onConfirm={handleConfirmAction}
-        title="Confirmation"
+        title="Delete Confirmation"
         message="Are you sure you want to proceed?"
       />
       <Card shadow="sm" p="md" radius="sm" withBorder>

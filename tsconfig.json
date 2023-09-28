@@ -29,6 +29,7 @@
       "@routes/*":["routes/*"],
       "@services/*":["services/*"],
       "@hooks/*":["hooks/*"],
+      "@store/*": ["store/*"]
     }
   },
   "include": ["src"],

@@ -17,7 +17,7 @@ const useAuthStore = create<UserState>()(
   persist(
     (set) => ({
       user: {
-        id: "",
+        _id: "",
         email: "",
         role: "",
         password: "",

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import useAxiosPrivate from "@hooks/useAxiosPrivate";
 import { UserInfo, Response } from "types";
-import { resolve } from "path";
-import { rejects } from "assert";
 
 interface UserResponse extends Response {
   user: UserInfo | null;
@@ -26,7 +24,35 @@ const useUser = () => {
     });
   };
 
-  const addUser = async (values: Omit<UserInfo, "id" | "image_path">) => {
+  const updateUser = async (
+    id: string,
+    values: Omit<UserInfo, "_id" | "image_path" | "password">,
+  ) => {
+    setLoading(true);
+    return await new Promise<Response>((resolve, reject) => {
+      axios
+        .put(`users/${id}`, values)
+        .then((res) => {
+          const result = {
+            status: res.status,
+            message: res.data.message,
+          };
+          resolve(result);
+        })
+        .catch((err) => {
+          const result = {
+            status: err.response.status,
+            message: err.response.data.message,
+          };
+          reject(result);
+        })
+        .finally(() => setLoading(false));
+    });
+  };
+
+  const addUser = async (
+    values: Omit<UserInfo, "_id" | "image_path" | "password">,
+  ) => {
     setLoading(true);
     const value = { ...values, ...{ role: values.role.toLowerCase() } };
     return await new Promise<UserResponse>((resolve, reject) => {
@@ -52,10 +78,35 @@ const useUser = () => {
     });
   };
 
+  const removeUser = async (id: string) => {
+    setLoading(true);
+    return await new Promise<Response>((resolve, reject) => {
+      axios
+        .delete(`users/${id}`)
+        .then((res) => {
+          const result = {
+            status: res.status,
+            message: res.data.message,
+          };
+          resolve(result);
+        })
+        .catch((err) => {
+          const result = {
+            status: err.response.status,
+            message: err.response.data.message,
+          };
+          reject(result);
+        })
+        .finally(() => setLoading(false));
+    });
+  };
+
   return {
     loading,
     addUser,
     getUsers,
+    updateUser,
+    removeUser,
   };
 };
 
