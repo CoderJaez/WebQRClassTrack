@@ -1,10 +1,8 @@
-import React, { SyntheticEvent, useState } from "react";
+import React, { useState } from "react";
 import {
   Container,
   Button,
   Card,
-  Image,
-  Text,
   Group,
   Table,
   Title,
@@ -12,16 +10,19 @@ import {
   TextInput,
   ActionIcon,
   Stack,
+  Image,
+  Tooltip,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import moment from "moment";
 import useClassroom from "@services/ClassroomService";
 import useClassroomStore from "store/classroom.store";
 import { useDisclosure } from "@mantine/hooks";
-import { Edit, Trash } from "tabler-icons-react";
+import { Edit, Download, Trash } from "tabler-icons-react";
 import { Classroom } from "types";
 import { ToastContainer, toast } from "react-toastify";
 import { ConfirmationDialog } from "@components/utils";
+import { saveAs } from "file-saver";
 
 const ClassroomPage: React.FC = () => {
   const {
@@ -135,30 +136,54 @@ const ClassroomPage: React.FC = () => {
     open();
   };
 
+  const downloadQrCode = (id: string) => {
+    const classroom = classrooms.find((room) => room._id === id) as Classroom;
+
+    const qrCode = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={"code": "${classroom._id}","type": "room_qr"}`;
+    saveAs(qrCode, `room_no_${classroom.roomNo}.jpg`);
+  };
+
   const action = (id: string) => {
     return (
       <Group justify="row">
-        <ActionIcon
-          variant="filled"
-          color="yellow"
-          aria-label="edit"
-          onClick={() => editRoom(id)}
-        >
-          <Edit style={{ width: "70%", height: "70%" }} strokeWidth={1.5} />
-        </ActionIcon>
-        <ActionIcon
-          variant="filled"
-          color="red"
-          aria-label="delete"
-          onClick={() => {
-            setClassroom(
-              classrooms.find((room) => room._id === id) as Classroom,
-            );
-            setConfirmationDialogOpen(true);
-          }}
-        >
-          <Trash style={{ width: "70%", height: "70%" }} strokeWidth={1.5} />
-        </ActionIcon>
+        <Tooltip label="Download">
+          <ActionIcon
+            variant="filled"
+            color="blue"
+            aria-label="download"
+            onClick={() => downloadQrCode(id)}
+          >
+            <Download
+              style={{ width: "70%", height: "70%" }}
+              strokeWidth={1.5}
+            />
+          </ActionIcon>
+        </Tooltip>
+        <Tooltip label="Edit Classroom">
+          <ActionIcon
+            variant="filled"
+            color="yellow"
+            aria-label="edit"
+            onClick={() => editRoom(id)}
+          >
+            <Edit style={{ width: "70%", height: "70%" }} strokeWidth={1.5} />
+          </ActionIcon>
+        </Tooltip>
+        <Tooltip label="Delete Classroom">
+          <ActionIcon
+            variant="filled"
+            color="red"
+            aria-label="delete"
+            onClick={() => {
+              setClassroom(
+                classrooms.find((room) => room._id === id) as Classroom,
+              );
+              setConfirmationDialogOpen(true);
+            }}
+          >
+            <Trash style={{ width: "70%", height: "70%" }} strokeWidth={1.5} />
+          </ActionIcon>
+        </Tooltip>
       </Group>
     );
   };
@@ -208,6 +233,7 @@ const ClassroomPage: React.FC = () => {
           <Table>
             <Table.Thead>
               <Table.Tr>
+                <Table.Th>QRCode</Table.Th>
                 <Table.Th>Room No</Table.Th>
                 <Table.Th>Occupied</Table.Th>
                 <Table.Th>Created At</Table.Th>
@@ -218,6 +244,15 @@ const ClassroomPage: React.FC = () => {
             <Table.Tbody>
               {classrooms.map((element) => (
                 <Table.Tr key={element._id}>
+                  <Table.Td>
+                    <Image
+                      radius="md"
+                      h={100}
+                      w={100}
+                      fit="contain"
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={"code": "${element._id}","type": "room_qr"}`}
+                    />
+                  </Table.Td>
                   <Table.Td>{element.roomNo.toUpperCase()}</Table.Td>
                   <Table.Td>
                     {element.isOccupied ? "Occupied" : "Vacant"}

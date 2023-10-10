@@ -71,7 +71,7 @@ const Header: React.FC<props> = ({ opened, toggle }) => {
           <Menu shadow="md">
             <Menu.Target>
               <UserButton
-                image={user?.image_path as string}
+                image={user?.image?.path as string}
                 name={`${user?.firstname.toLocaleUpperCase()} ${user?.middlename.toLocaleUpperCase()} ${user?.lastname.toLocaleUpperCase()}`}
                 email={user?.email as string}
               />

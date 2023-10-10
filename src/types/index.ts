@@ -20,7 +20,7 @@ export interface UserInfo extends User {
   middlename: string;
   lastname: string;
   contact_no: string;
-  image_path: string | null;
+  image: { filename: string; path: string } | null;
 }
 
 export interface Reservation {
@@ -66,4 +66,18 @@ export interface Occupancy {
   isVacant: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface Reservation {
+  _id: string;
+  event: string;
+  dateFrom: Date;
+  dateTo: Date;
+  instructor: string;
+  classroom: string;
+  status: string;
+}
+export interface QrCode {
+  type: string;
+  code: string;
 }

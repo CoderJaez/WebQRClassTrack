@@ -1,5 +1,5 @@
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Classroom, Response } from "../types";
 
 interface ClassroomResponse extends Response {

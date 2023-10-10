@@ -26,7 +26,7 @@ const useUser = () => {
 
   const updateUser = async (
     id: string,
-    values: Omit<UserInfo, "_id" | "image_path" | "password">,
+    values: Omit<UserInfo, "_id" | "image" | "password">,
   ) => {
     setLoading(true);
     return await new Promise<Response>((resolve, reject) => {
@@ -51,7 +51,7 @@ const useUser = () => {
   };
 
   const addUser = async (
-    values: Omit<UserInfo, "_id" | "image_path" | "password">,
+    values: Omit<UserInfo, "_id" | "image" | "password">,
   ) => {
     setLoading(true);
     const value = { ...values, ...{ role: values.role.toLowerCase() } };

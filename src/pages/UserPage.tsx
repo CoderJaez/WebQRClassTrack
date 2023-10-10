@@ -5,11 +5,9 @@ import {
   Card,
   Button,
   Title,
-  Text,
   Modal,
   Group,
   Table,
-  PasswordInput,
   TextInput,
   Select,
   Stack,
@@ -61,7 +59,7 @@ const UserPage: React.FC = () => {
   };
 
   const handleSubmit = async (
-    values: Omit<UserInfo, "_id" | "image_path" | "password">,
+    values: Omit<UserInfo, "_id" | "image" | "password">,
   ) => {
     try {
       if (!userId) {
@@ -129,7 +127,7 @@ const UserPage: React.FC = () => {
     fetchData();
   }, []);
 
-  const form = useForm<Omit<UserInfo, "_id" | "image_path" | "password">>({
+  const form = useForm<Omit<UserInfo, "_id" | "image" | "password">>({
     validateInputOnChange: true,
     initialValues: {
       firstname: "",
@@ -219,7 +217,7 @@ const UserPage: React.FC = () => {
               {users.map((user, index) => (
                 <Table.Tr key={index}>
                   <Table.Td>
-                    <Avatar src={user.image_path} size="md" />
+                    <Avatar src={user.image?.path} size="md" />
                   </Table.Td>
                   <Table.Td>{`${user.firstname.toUpperCase()} ${
                     user.middlename ?? user.middlename

@@ -25,7 +25,7 @@ const useAuthStore = create<UserState>()(
         middlename: "",
         lastname: "",
         contact_no: "",
-        image_path: "",
+        image: null,
       },
       accessToken: "",
       refreshToken: "",
@@ -37,6 +37,7 @@ const useAuthStore = create<UserState>()(
               password: password,
             })
             .then((res) => {
+              console.log(res.data.user);
               if (res.data.user.role == "admin") {
                 const response: Response = {
                   status: res.status,
