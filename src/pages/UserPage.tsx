@@ -252,7 +252,11 @@ const UserPage: React.FC = () => {
               placeholder="Eg. John"
               {...form.getInputProps("firstname")}
             />
-            <TextInput label="Middlenane" placeholder="Eg. M" />
+            <TextInput
+              label="Middlenane"
+              placeholder="Eg. M"
+              {...form.getInputProps("middlename")}
+            />
             <TextInput
               label="Lastname"
               placeholder="Eg. Doe"
