@@ -8,7 +8,6 @@ import {
   Title,
 } from "@mantine/core";
 import { ToastContainer, toast } from "react-toastify";
-import logo from "@assets/logo.png";
 import useAuthStore from "store/auth";
 import { Response, User } from "types";
 import { useForm } from "@mantine/form";

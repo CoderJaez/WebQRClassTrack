@@ -1,21 +1,18 @@
 import React, { useState } from "react";
 import {
   Container,
-  Button,
   Card,
   Group,
   Table,
   Title,
-  Modal,
   TextInput,
   ActionIcon,
-  Stack,
   Tooltip,
   Select,
 } from "@mantine/core";
-import { useForm } from "@mantine/form";
+// import { useForm } from "@mantine/form";
 import moment from "moment";
-import { useDisclosure } from "@mantine/hooks";
+// import { useDisclosure } from "@mantine/hooks";
 import { Trash } from "tabler-icons-react";
 import { ToastContainer, toast } from "react-toastify";
 import { ConfirmationDialog } from "@components/utils";
@@ -29,7 +26,6 @@ type confirmDialogContent = {
 };
 
 const ReservationPage: React.FC = () => {
-  const [opened, { close }] = useDisclosure(false);
   const [reservationId, setReservationId] = useState("");
   const [status, setStatus] = useState("");
   const [eventAction, setEventAction] = useState<Action>(Action.DELETE);
@@ -37,7 +33,7 @@ const ReservationPage: React.FC = () => {
     title: "Delete Confirmation",
     message: "Are you sure you want to proceed?",
   });
-  const { reservations, removeReservation } = useReservationStore();
+  const { reservations } = useReservationStore();
   const { getReservations, deleteReservation, updateReservationStatus } =
     useReservationService();
   const [search, setSearch] = useState("");
@@ -75,14 +71,14 @@ const ReservationPage: React.FC = () => {
     }
   };
 
-  const form = useForm({
-    validateInputOnChange: true,
-    initialValues: { roomNo: "" },
-    validate: {
-      roomNo: (value) =>
-        value.trim().length !== 0 ? null : "Room no is required",
-    },
-  });
+  // const form = useForm({
+  //   validateInputOnChange: true,
+  //   initialValues: { roomNo: "" },
+  //   validate: {
+  //     roomNo: (value) =>
+  //       value.trim().length !== 0 ? null : "Room no is required",
+  //   },
+  // });
 
   // const onSubmitHandler = async (values: typeof form.values) => {};
 

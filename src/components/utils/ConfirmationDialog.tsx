@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Group, Modal, Text } from "@mantine/core";
+import { Button, Group, Modal } from "@mantine/core";
 
 interface ConfirmationDialogProps {
   open: boolean;
