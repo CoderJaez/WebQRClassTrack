@@ -10,34 +10,63 @@ import {
   TextInput,
   ActionIcon,
   Stack,
-  Image,
   Tooltip,
+  Select,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import moment from "moment";
 import { useDisclosure } from "@mantine/hooks";
-import { Edit, Trash } from "tabler-icons-react";
+import { Trash } from "tabler-icons-react";
 import { ToastContainer, toast } from "react-toastify";
 import { ConfirmationDialog } from "@components/utils";
-import { Reservation } from "types";
+import { Action } from "types";
 import useReservationStore from "@store/reservation.store";
 import useReservationService from "@services/ReservationService";
+
+type confirmDialogContent = {
+  title: string;
+  message: string;
+};
+
 const ReservationPage: React.FC = () => {
-  const [opened, { open, close }] = useDisclosure(false);
-  const [reservation, setReservation] = useState<Reservation | null>(null);
-  const { reservations, addReservation, removeReservation } =
-    useReservationStore();
-  const { getReservations, loading } = useReservationService();
+  const [opened, { close }] = useDisclosure(false);
+  const [reservationId, setReservationId] = useState("");
+  const [status, setStatus] = useState("");
+  const [eventAction, setEventAction] = useState<Action>(Action.DELETE);
+  const [confirmMessage, setConfirmMessage] = useState<confirmDialogContent>({
+    title: "Delete Confirmation",
+    message: "Are you sure you want to proceed?",
+  });
+  const { reservations, removeReservation } = useReservationStore();
+  const { getReservations, deleteReservation, updateReservationStatus } =
+    useReservationService();
   const [search, setSearch] = useState("");
   const [isConfirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
-  const handleConfirmAction = async () => {};
+
+  const handleConfirmAction = async () => {
+    switch (eventAction) {
+      case Action.DELETE:
+        await deleteReservation(reservationId)
+          .then((res) => toast.success(res.message as string))
+          .catch((err) => toast.warning(err.message as string));
+        break;
+      case Action.RESERVATION_STATUS:
+        await updateReservationStatus(reservationId, status)
+          .then((res) => toast.success(res.message as string))
+          .catch((err) => toast.warning(err.message as string));
+        break;
+      default:
+        break;
+    }
+    setConfirmationDialogOpen(false);
+  };
+
   const handleCloseConfirmationDialog = () => {
     setConfirmationDialogOpen(false);
   };
 
   const fetchData = async (search: string) => {
     await getReservations(search);
-    console.log(reservations);
   };
 
   const onSearchHandler = (e: React.KeyboardEvent) => {
@@ -55,7 +84,7 @@ const ReservationPage: React.FC = () => {
     },
   });
 
-  const onSubmitHandler = async (values: typeof form.values) => {};
+  // const onSubmitHandler = async (values: typeof form.values) => {};
 
   React.useEffect(() => {
     const abortController = new AbortController();
@@ -64,6 +93,18 @@ const ReservationPage: React.FC = () => {
       abortController.abort();
     };
   }, []);
+
+  const setReservationStatus = (id: string, status: string) => {
+    setReservationId(id);
+    setStatus(status);
+    setConfirmMessage({
+      title: `${status.toLowerCase()} confirmation`,
+      message: `Do you want to ${status.toLowerCase()} the reservation?`,
+    });
+    setEventAction(Action.RESERVATION_STATUS);
+    setConfirmationDialogOpen(true);
+  };
+
   const action = (id: string) => {
     return (
       <Group justify="row">
@@ -73,9 +114,11 @@ const ReservationPage: React.FC = () => {
             color="red"
             aria-label="delete"
             onClick={() => {
-              setReservation(
-                reservations.find((room) => room._id === id) as Reservation,
-              );
+              setReservationId(id);
+              setConfirmMessage({
+                title: "Delete Confirmation",
+                message: "Do you want to delete the reservation?",
+              });
               setConfirmationDialogOpen(true);
             }}
           >
@@ -93,8 +136,8 @@ const ReservationPage: React.FC = () => {
         open={isConfirmationDialogOpen}
         onClose={handleCloseConfirmationDialog}
         onConfirm={handleConfirmAction}
-        title="Delete Confirmation"
-        message="Are you sure you want to proceed?"
+        title={confirmMessage?.title}
+        message={confirmMessage?.message}
       />
       <Card shadow="sm" p="md" radius="sm" withBorder>
         <Card.Section>
@@ -126,13 +169,13 @@ const ReservationPage: React.FC = () => {
                 <Table.Th>Room No</Table.Th>
                 <Table.Th>Instructor</Table.Th>
                 <Table.Th>Date & Time</Table.Th>
-                <Table.Th>Status</Table.Th>
+                <Table.Th w={200}>Status</Table.Th>
                 <Table.Th>Action</Table.Th>
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>
               {reservations.map((e) => (
-                <Table.Tr>
+                <Table.Tr key={e._id}>
                   <Table.Td>{e.event.toLocaleUpperCase()}</Table.Td>
                   <Table.Td>{e.classroom}</Table.Td>
                   <Table.Td>{e.instructor.toUpperCase()}</Table.Td>
@@ -141,12 +184,31 @@ const ReservationPage: React.FC = () => {
                     {moment(e?.dateTo).format("hh:mm:ss a)")}
                   </Table.Td>
                   <Table.Td>
-                    <Button
-                      title={e.status.toUpperCase()}
-                      color={e.status === "pending" ? "red" : ""}
-                    >
-                      {e.status.toUpperCase()}
-                    </Button>
+                    <Select
+                      variant="unstyled"
+                      style={{
+                        backgroundColor:
+                          e.status === "pending"
+                            ? "#F59F00"
+                            : e.status === "approve"
+                            ? "#339AF0"
+                            : "#FF6B6B",
+                        paddingInline: 10,
+                        borderRadius: 5,
+                        color: "#F8F9FA",
+                      }}
+                      onChange={(selectedValue: string) => {
+                        if (selectedValue !== e.status.toUpperCase()) {
+                          setReservationStatus(
+                            e._id,
+                            selectedValue.toLowerCase(),
+                          );
+                        }
+                      }}
+                      data={["PENDING", "APPROVE", "DENY"]}
+                      defaultValue={e.status.toUpperCase()}
+                      allowDeselect={false}
+                    />
                   </Table.Td>
                   <Table.Td>{action(e._id)}</Table.Td>
                 </Table.Tr>
@@ -155,7 +217,7 @@ const ReservationPage: React.FC = () => {
           </Table>
         </Table.ScrollContainer>
 
-        <Modal
+        {/* <Modal
           opened={opened}
           onClose={close}
           title="Classroom"
@@ -175,7 +237,7 @@ const ReservationPage: React.FC = () => {
               </Button>
             </Stack>
           </form>
-        </Modal>
+        </Modal> */}
       </Card>
     </Container>
   );

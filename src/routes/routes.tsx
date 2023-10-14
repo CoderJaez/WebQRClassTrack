@@ -4,10 +4,8 @@ import {
   ReservationPage,
   ClassroomPage,
   OccupancyPage,
-  LoginPage,
 } from "@pages/index";
 import {
-  Gauge,
   Chalkboard,
   Dashboard,
   FileStack,

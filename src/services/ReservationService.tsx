@@ -6,7 +6,12 @@ import useAxiosPrivate from "@hooks/useAxiosPrivate";
 const useReservationService = () => {
   const [loading, setLoading] = React.useState(false);
   const axios = useAxiosPrivate();
-  const { setReservations } = useReservationStore();
+  const {
+    reservations,
+    removeReservation,
+    setReservations,
+    updateReservation,
+  } = useReservationStore();
 
   const getReservations = async (search: string) => {
     setLoading(true);
@@ -28,7 +33,57 @@ const useReservationService = () => {
     });
   };
 
-  return { getReservations, loading };
+  const updateReservationStatus = async (id: string, value: string) => {
+    return await new Promise<Response>((resolve, reject) => {
+      axios
+        .put(`reservations/update-status/${id}`, { status: value })
+        .then((res) => {
+          const reservation = reservations.find((item) => item._id === id);
+          const updatedReservation = {
+            ...reservation,
+            ...{ status: value },
+          } as Reservation;
+          updateReservation(updatedReservation);
+          resolve({
+            status: res.status,
+            message: res.data.message,
+          });
+        })
+        .catch((err) => {
+          reject({
+            status: err.response.status,
+            message: err.response.data.message,
+          });
+        });
+    });
+  };
+
+  const deleteReservation = async (id: string) => {
+    return await new Promise<Response>((resolve, reject) => {
+      axios
+        .delete(`reservations/${id}`)
+        .then((res) => {
+          removeReservation(id);
+          resolve({
+            status: res.status,
+            message: res.data.message,
+          });
+        })
+        .catch((err) => {
+          reject({
+            status: err.response.status,
+            message: err.response.data.message,
+          });
+        });
+    });
+  };
+
+  return {
+    getReservations,
+    loading,
+    updateReservationStatus,
+    deleteReservation,
+  };
 };
 
 export default useReservationService;

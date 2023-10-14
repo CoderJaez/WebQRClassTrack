@@ -2,7 +2,6 @@ import React from "react";
 import {
   Button,
   Container,
-  Image,
   Paper,
   PasswordInput,
   TextInput,
@@ -18,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 const LoginPage: React.FC = () => {
   const { login } = useAuthStore();
   const navigate = useNavigate();
-  const form = useForm<Omit<User, "id" | "role">>({
+  const form = useForm<Omit<User, "_id" | "role">>({
     validateInputOnChange: true,
     initialValues: {
       email: "",

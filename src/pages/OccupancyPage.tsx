@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import ActionButtons from "@components/utils/ActionButtons";
+import { ToastContainer } from "react-toastify";
 import { ConfirmationDialog } from "@components/utils";
 import {
   Container,
@@ -12,11 +11,9 @@ import {
   Text,
   Table,
   Avatar,
-  Badge,
 } from "@mantine/core";
 import { X } from "tabler-icons-react";
 import moment from "moment";
-import { useDisclosure } from "@mantine/hooks";
 import useOccupancy from "@services/OccupancyService";
 import useOccupancyStore from "@store/occupancy.store";
 
@@ -93,7 +90,6 @@ const OccupancyPage: React.FC = () => {
               <Table.Th></Table.Th>
               <Table.Th>Instructor</Table.Th>
               <Table.Th>Room </Table.Th>
-              <Table.Th>Status</Table.Th>
               <Table.Th>Date</Table.Th>
             </Table.Tr>
           </Table.Thead>
@@ -110,11 +106,7 @@ const OccupancyPage: React.FC = () => {
                   </Group>
                 </Table.Td>
                 <Table.Td>{occ.roomNo}</Table.Td>
-                <Table.Td>
-                  <Badge color={!occ.isVacant ? "cyan" : "red"}>
-                    {!occ.isVacant ? "Vacant" : "Occupied"}
-                  </Badge>
-                </Table.Td>
+
                 <Table.Td>
                   <Text size="sm">
                     <span style={{ fontWeight: "bold" }}>Time In:</span>

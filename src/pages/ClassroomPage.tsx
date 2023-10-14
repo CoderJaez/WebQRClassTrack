@@ -12,6 +12,7 @@ import {
   Stack,
   Image,
   Tooltip,
+  Badge,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import moment from "moment";
@@ -235,7 +236,7 @@ const ClassroomPage: React.FC = () => {
               <Table.Tr>
                 <Table.Th>QRCode</Table.Th>
                 <Table.Th>Room No</Table.Th>
-                <Table.Th>Occupied</Table.Th>
+                <Table.Th>Status</Table.Th>
                 <Table.Th>Created At</Table.Th>
                 <Table.Th>Updated At</Table.Th>
                 <Table.Th>Action</Table.Th>
@@ -255,16 +256,18 @@ const ClassroomPage: React.FC = () => {
                   </Table.Td>
                   <Table.Td>{element.roomNo.toUpperCase()}</Table.Td>
                   <Table.Td>
-                    {element.isOccupied ? "Occupied" : "Vacant"}
+                    <Badge color={!element.isOccupied ? "cyan" : "red"}>
+                      {!element.isOccupied ? "Vacant" : "Occupied"}
+                    </Badge>
                   </Table.Td>
                   <Table.Td>
                     {moment(element.createdAt.toString()).format(
-                      "MM DD, YYYY hh:mm:ss a",
+                      "MMM DD, YYYY hh:mm:ss a",
                     )}
                   </Table.Td>
                   <Table.Td>
                     {moment(element.updatedAt.toString()).format(
-                      "MM DD, YYYY hh:mm:ss a",
+                      "MMM DD, YYYY hh:mm:ss a",
                     )}
                   </Table.Td>
                   <Table.Td>{action(element._id)}</Table.Td>

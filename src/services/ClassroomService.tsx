@@ -80,7 +80,7 @@ const useClassroom = () => {
           const result: Classroom[] = res.data;
           resolve(result);
         })
-        .catch((err) => reject([]));
+        .catch(() => reject([]));
     });
   };
 

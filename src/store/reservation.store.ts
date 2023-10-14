@@ -6,6 +6,7 @@ interface StateProps {
   setReservations: (data: Reservation[]) => void;
   removeReservation: (data: string) => void;
   addReservation: (data: Reservation) => void;
+  updateReservation: (data: Reservation) => void;
 }
 
 const useReservationStore = create<StateProps>()((set) => ({
@@ -17,6 +18,10 @@ const useReservationStore = create<StateProps>()((set) => ({
     })),
   addReservation: (data: Reservation) =>
     set((state) => ({ reservations: [data, ...state.reservations] })),
+  updateReservation: (data: Reservation) =>
+    set((state) => ({
+      reservations: state.reservations.map((item) => item._id === data._id ? data:item),
+    })),
 }));
 
 export default useReservationStore;

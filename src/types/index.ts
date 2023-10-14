@@ -81,3 +81,9 @@ export interface QrCode {
   type: string;
   code: string;
 }
+
+export enum Action {
+  EDIT,
+  DELETE,
+  RESERVATION_STATUS,
+}

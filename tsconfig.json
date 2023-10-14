@@ -13,6 +13,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "outDir": "./dir",
 
     /* Linting */
     "strict": true,
@@ -32,6 +33,6 @@
       "@store/*": ["store/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src","public"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

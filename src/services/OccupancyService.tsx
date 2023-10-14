@@ -1,9 +1,8 @@
-import React, { useState } from "react";
 import useAxiosPrivate from "@hooks/useAxiosPrivate";
-import { Occupancy, Response } from "types";
+import { Occupancy } from "types";
 
 const OccupancyService = () => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const axios = useAxiosPrivate();
 
   const getOccupancies = async (

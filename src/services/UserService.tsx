@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import useAxiosPrivate from "@hooks/useAxiosPrivate";
 import { UserInfo, Response } from "types";
 
