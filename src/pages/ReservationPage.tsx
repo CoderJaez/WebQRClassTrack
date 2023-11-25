@@ -186,7 +186,7 @@ const ReservationPage: React.FC = () => {
                         backgroundColor:
                           e.status === "pending"
                             ? "#F59F00"
-                            : e.status === "approve"
+                            : e.status === "approve" || e.status === "occupied"
                             ? "#339AF0"
                             : "#FF6B6B",
                         paddingInline: 10,
@@ -201,12 +201,15 @@ const ReservationPage: React.FC = () => {
                           );
                         }
                       }}
-                      data={["PENDING", "APPROVE", "DENY"]}
+                      data={["PENDING", "APPROVE", "DENY", "OCCUPIED"]}
                       defaultValue={e.status.toUpperCase()}
                       allowDeselect={false}
+                      disabled={e.status === "occupied"}
                     />
                   </Table.Td>
-                  <Table.Td>{action(e._id)}</Table.Td>
+                  <Table.Td>
+                    {e.status !== "occupied" ? action(e._id):null}
+                  </Table.Td>
                 </Table.Tr>
               ))}
             </Table.Tbody>

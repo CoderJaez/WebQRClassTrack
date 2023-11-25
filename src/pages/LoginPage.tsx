@@ -4,10 +4,12 @@ import {
   Container,
   Paper,
   PasswordInput,
+  Text,
   TextInput,
   Title,
 } from "@mantine/core";
 import { ToastContainer, toast } from "react-toastify";
+
 import useAuthStore from "store/auth";
 import { Response, User } from "types";
 import { useForm } from "@mantine/form";
@@ -51,7 +53,7 @@ const LoginPage: React.FC = () => {
         pauseOnHover
         theme="light"
       />
-      <Title>Welcome back!</Title>
+      <Title></Title>
 
       <form onSubmit={form.onSubmit(onSubmitHandler as any)}>
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
@@ -72,7 +74,9 @@ const LoginPage: React.FC = () => {
           <Button fullWidth mt="xl" type="submit">
             Sign in
           </Button>
+          <Text >Forgot Password?</Text>
         </Paper>
+
       </form>
     </Container>
   );
