@@ -34,7 +34,7 @@ const LoginPage: React.FC = () => {
     await login(user.email, user.password)
       .then((res) => {
         toast.success(res.message as string);
-        navigate("/dashboard");
+        navigate("/occupancies");
       })
       .catch((err: Response) => {
         toast.warn(err.message as string);
@@ -74,9 +74,8 @@ const LoginPage: React.FC = () => {
           <Button fullWidth mt="xl" type="submit">
             Sign in
           </Button>
-          <Text >Forgot Password?</Text>
+          <Text>Forgot Password?</Text>
         </Paper>
-
       </form>
     </Container>
   );
