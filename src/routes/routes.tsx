@@ -5,12 +5,7 @@ import {
   ClassroomPage,
   OccupancyPage,
 } from "@pages/index";
-import {
-  Chalkboard,
-  Dashboard,
-  FileStack,
-  User,
-} from "tabler-icons-react";
+import { Chalkboard, Dashboard, FileStack, User } from "tabler-icons-react";
 import { Route } from "types";
 
 const routes: Omit<Route, "leftSection" | "rightSection">[] = [
@@ -26,11 +21,11 @@ const routes: Omit<Route, "leftSection" | "rightSection">[] = [
 ];
 
 export const navLinks: Omit<Route, "component" | "rightSection">[] = [
-  {
-    label: "Dashboard",
-    path: "/dashboard",
-    leftSection: <Dashboard size="1rem" strokeWidth={1.5} />,
-  },
+  // {
+  //   label: "Dashboard",
+  //   path: "/dashboard",
+  //   leftSection: <Dashboard size="1rem" strokeWidth={1.5} />,
+  // },
   {
     label: "Occupancies",
     path: "/occupancies",
