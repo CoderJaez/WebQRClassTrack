@@ -57,13 +57,14 @@ export const data = {
 const DashboardPage: React.FC = () => {
   return (
     <Container fluid p="lg">
-      <Grid>
+      {/* <Grid>
         <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 3 }}>
           <BadgeCard Title="Instructors" Value="20" BgColor="cyan" />
         </Grid.Col>
         <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 3 }}>
           <BadgeCard Title="Classrooms" Value="10/20" BgColor="indigo" />
         </Grid.Col>
+
         <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 3 }}>
           <BadgeCard Title="Reservations" Value="10/20" BgColor="seagreen" />
         </Grid.Col>
@@ -83,7 +84,7 @@ const DashboardPage: React.FC = () => {
             <Bar options={options} data={data} />
           </Card>
         </Grid.Col>
-      </Grid>
+      </Grid> */}
     </Container>
   );
 };

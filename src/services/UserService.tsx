@@ -23,7 +23,28 @@ const useUser = () => {
         });
     });
   };
-
+  const logout = async () => {
+    return await new Promise<Response>((resolve, reject) => {
+      axios
+        .get("auth/logout")
+        .then((res) => {
+          const message = {
+            status: res.status,
+            message: res.data.message,
+          } as Response;
+          resolve(message);
+        })
+        .catch((err) => {
+          console.error("Error: ", err);
+          const message = {
+            status: err.status,
+            message: err.response.data.message,
+          } as Response;
+          reject(message);
+          
+        });
+    });
+  };
   const updateUser = async (
     id: string,
     values: Omit<UserInfo, "_id" | "image" | "password">,
@@ -107,6 +128,7 @@ const useUser = () => {
     getUsers,
     updateUser,
     removeUser,
+    logout,
   };
 };
 

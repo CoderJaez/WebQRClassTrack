@@ -13,6 +13,9 @@ import React, { forwardRef } from "react";
 import logo from "@assets/logo.png";
 import { User, Password, ChevronRight, Logout } from "tabler-icons-react";
 import useAuthStore from "store/auth";
+import { useNavigate } from "react-router-dom";
+import useUser from "@services/UserService";
+
 type props = {
   opened: boolean;
   toggle: () => void;
@@ -55,6 +58,21 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
 );
 const Header: React.FC<props> = ({ opened, toggle }) => {
   const { user } = useAuthStore();
+  const navigate = useNavigate();
+  const { logout } = useUser();
+  const logoutHandler = async () => {
+    logout()
+      .then((res) => {
+        if (res.status === 202) {
+          navigate("login");
+        }
+      })
+      .catch((err) => {
+        console.log("Error:", err.message);
+        navigate("login");
+      });
+  };
+
   return (
     <AppShell.Header>
       <Flex justify="space-between" align="center">
@@ -89,6 +107,7 @@ const Header: React.FC<props> = ({ opened, toggle }) => {
               </Menu.Item>
               <Menu.Item
                 leftSection={<Logout style={{ width: 20, height: 20 }} />}
+                onClick={logoutHandler}
               >
                 Logout
               </Menu.Item>
