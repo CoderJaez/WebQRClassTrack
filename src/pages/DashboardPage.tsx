@@ -1,59 +1,59 @@
-import { Card, Container, Grid } from "@mantine/core";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend,
-} from "chart.js";
-import { Line, Bar } from "react-chartjs-2";
+import {  Container, } from "@mantine/core";
+// import {
+//   Chart as ChartJS,
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+//   BarElement,
+//   Title,
+//   Tooltip,
+//   Filler,
+//   Legend,
+// } from "chart.js";
+// import { Line, Bar } from "react-chartjs-2";
 import React from "react";
-import BadgeCard from "@components/BadgeCard";
+// import BadgeCard from "@components/BadgeCard";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend,
-);
+// ChartJS.register(
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+//   BarElement,
+//   Title,
+//   Tooltip,
+//   Filler,
+//   Legend,
+// );
 
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top" as const,
-    },
-    title: {
-      display: true,
-      text: "Chart.js Line Chart",
-    },
-  },
-};
+// export const options = {
+//   responsive: true,
+//   plugins: {
+//     legend: {
+//       position: "top" as const,
+//     },
+//     title: {
+//       display: true,
+//       text: "Chart.js Line Chart",
+//     },
+//   },
+// };
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+// const labels = ["January", "February", "March", "April", "May", "June", "July"];
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      fill: true,
-      label: "Dataset 2",
-      data: labels.map(() => Math.random()),
-      borderColor: "rgb(53, 162, 235)",
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
-    },
-  ],
-};
+// export const data = {
+//   labels,
+//   datasets: [
+//     {
+//       fill: true,
+//       label: "Dataset 2",
+//       data: labels.map(() => Math.random()),
+//       borderColor: "rgb(53, 162, 235)",
+//       backgroundColor: "rgba(53, 162, 235, 0.5)",
+//     },
+//   ],
+// };
 const DashboardPage: React.FC = () => {
   return (
     <Container fluid p="lg">
