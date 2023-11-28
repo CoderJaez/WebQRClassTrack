@@ -31,6 +31,7 @@ const LoginPage: React.FC = () => {
   });
 
   const onSubmitHandler = async (user: Omit<User, "_id" | "role">) => {
+
     await login(user.email, user.password)
       .then((res) => {
         toast.success(res.message as string);
@@ -74,7 +75,6 @@ const LoginPage: React.FC = () => {
           <Button fullWidth mt="xl" type="submit">
             Sign in
           </Button>
-          <Text>Forgot Password?</Text>
         </Paper>
       </form>
     </Container>
