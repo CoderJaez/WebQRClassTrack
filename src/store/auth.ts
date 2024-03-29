@@ -8,7 +8,6 @@ interface UserState {
   accessToken: string | null;
   refreshToken: string | null;
   login: (email: string, password: string) => Promise<Response>;
-  logout: () => Promise<Response>;
   setUser: (user: UserInfo) => void;
   setAccessToken: (token: string) => void;
   setTokens: (accessToken: string, refreshToken: string) => void;
@@ -67,29 +66,7 @@ const useAuthStore = create<UserState>()(
             });
         });
       },
-      logout: async () => {
-        const axios = useAxiosPrivate();
 
-        return await new Promise<Response>((resolve, reject) => {
-          axios
-            .get("logout")
-            .then((res) => {
-              const message = {
-                status: res.status,
-                message: res.data.message,
-              } as Response;
-              resolve(message);
-            })
-            .catch((err) => {
-              console.error("Error: ", err);
-              const message = {
-                status: err.status,
-                message: err.response.data.message,
-              } as Response;
-              reject(message);
-            });
-        });
-      },
       setUser: (user: UserInfo) => set((state) => ({ ...state.user, user })),
       setAccessToken: (token: string) => set(() => ({ accessToken: token })),
       setTokens: (accessToken: string, refreshToken: string) =>

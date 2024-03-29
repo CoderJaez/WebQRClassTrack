@@ -1,20 +1,22 @@
 import {
-  DashboardPage,
-  UserPage,
-  ReservationPage,
   ClassroomPage,
+  DashboardPage,
   OccupancyPage,
+  ReservationSummary,
+  SchedulingPage,
+  UserPage,
 } from "@pages/index";
-import { Chalkboard, Dashboard, FileStack, User } from "tabler-icons-react";
+import { Calendar, Chalkboard, FileStack, User } from "tabler-icons-react";
 import { Route } from "types";
 
 const routes: Omit<Route, "leftSection" | "rightSection">[] = [
   { label: "Dashboard", path: "/dashboard", component: <DashboardPage /> },
   { label: "Occupancy", path: "/occupancies", component: <OccupancyPage /> },
+  { label: "Scheduling", path: "/scheduling", component: <SchedulingPage /> },
   {
     label: "Reservations",
     path: "/reservations",
-    component: <ReservationPage />,
+    component: <ReservationSummary />,
   },
   { label: "Classrooms", path: "/classrooms", component: <ClassroomPage /> },
   { label: "User", path: "/users", component: <UserPage /> },
@@ -27,9 +29,14 @@ export const navLinks: Omit<Route, "component" | "rightSection">[] = [
   //   leftSection: <Dashboard size="1rem" strokeWidth={1.5} />,
   // },
   {
+    label: "Scheduling",
+    path: "/scheduling",
+    leftSection: <Calendar size="1rem" strokeWidth={1.5} />,
+  },
+  {
     label: "Occupancies",
     path: "/occupancies",
-    leftSection: <Dashboard size="1rem" strokeWidth={1.5} />,
+    leftSection: <Chalkboard size="1rem" strokeWidth={1.5} />,
   },
   {
     label: "Reservations",
