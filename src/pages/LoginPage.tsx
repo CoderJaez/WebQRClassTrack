@@ -4,7 +4,6 @@ import {
   Container,
   Paper,
   PasswordInput,
-  Text,
   TextInput,
   Title,
 } from "@mantine/core";
@@ -31,7 +30,6 @@ const LoginPage: React.FC = () => {
   });
 
   const onSubmitHandler = async (user: Omit<User, "_id" | "role">) => {
-
     await login(user.email, user.password)
       .then((res) => {
         toast.success(res.message as string);

@@ -7,8 +7,10 @@ import ReservationPage from "./ReservationPage";
 import ReservationSummary from "./ReservationSummary";
 import SchedulingPage from "./SchedulingPage";
 import UserPage from "./UserPage";
+import ProgramPage from "./ProgramPage";
+import CoursePage from "./CoursePage";
 export {
-  ClassroomPage, DashboardPage, LoginPage, NotFoundPage, OccupancyPage,
+  CoursePage, ClassroomPage, ProgramPage, DashboardPage, LoginPage, NotFoundPage, OccupancyPage,
   ReservationPage, ReservationSummary, SchedulingPage, UserPage
 };
 

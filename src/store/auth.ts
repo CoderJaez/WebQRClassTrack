@@ -58,11 +58,20 @@ const useAuthStore = create<UserState>()(
             })
             .catch((err) => {
               console.log("Error:", err);
-              const response: Response = {
-                status: err.response.status,
-                message: err.response.data.message,
-              };
-              reject(response);
+              if (err.response) {
+                const response: Response = {
+                  status: err.response.status,
+                  message: err.response.data.message,
+                };
+                reject(response);
+              } else {
+                const response: Response = {
+                  status: 500,
+                  message: err.message,
+                };
+                reject(response);
+              }
+
             });
         });
       },

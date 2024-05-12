@@ -87,3 +87,21 @@ export enum Action {
   DELETE,
   RESERVATION_STATUS,
 }
+
+export interface Program {
+  _id?: string;
+  name: string;
+  description: string;
+  courses?: Course[];
+  createdAt?: Date;
+  updatedAt?: Date
+}
+
+export interface Course {
+  _id?: string;
+  code: string;
+  sem: string;
+  program: Program;
+  createdAt: Date;
+  updatedAt: Date;
+}

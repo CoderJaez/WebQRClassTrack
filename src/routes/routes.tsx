@@ -5,8 +5,16 @@ import {
   ReservationSummary,
   SchedulingPage,
   UserPage,
+  ProgramPage,
+  CoursePage,
 } from "@pages/index";
-import { Calendar, Chalkboard, FileStack, User } from "tabler-icons-react";
+import {
+  Calendar,
+  Chalkboard,
+  FileStack,
+  User,
+  File,
+} from "tabler-icons-react";
 import { Route } from "types";
 
 const routes: Omit<Route, "leftSection" | "rightSection">[] = [
@@ -20,6 +28,8 @@ const routes: Omit<Route, "leftSection" | "rightSection">[] = [
   },
   { label: "Classrooms", path: "/classrooms", component: <ClassroomPage /> },
   { label: "User", path: "/users", component: <UserPage /> },
+  { label: "Program", path: "/programs", component: <ProgramPage /> },
+  { label: "Course", path: "/courses", component: <CoursePage /> },
 ];
 
 export const navLinks: Omit<Route, "component" | "rightSection">[] = [
@@ -47,6 +57,16 @@ export const navLinks: Omit<Route, "component" | "rightSection">[] = [
     label: "Classrooms",
     path: "/classrooms",
     leftSection: <Chalkboard size="1rem" strokeWidth={1.5} />,
+  },
+  {
+    label: "Programs",
+    path: "/programs",
+    leftSection: <File size="1rem" strokeWidth={1.5} />,
+  },
+  {
+    label: "Course",
+    path: "/courses",
+    leftSection: <File size="1rem" strokeWidth={1.5} />,
   },
   {
     label: "User",
