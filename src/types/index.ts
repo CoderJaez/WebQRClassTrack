@@ -101,7 +101,21 @@ export interface Course {
   _id?: string;
   code: string;
   sem: string;
+  description: string;
+  program?: Program;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+
+export interface SubjectSchedule {
+  _id?: string;
+  course: Course;
   program: Program;
-  createdAt: Date;
-  updatedAt: Date;
+  classroom: Classroom;
+  day: string;
+  time_from: string;
+  time_to: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

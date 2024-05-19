@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { UserInfo, Response } from "types";
 import { persist, createJSONStorage } from "zustand/middleware";
-import useAxiosPrivate from "@hooks/useAxiosPrivate";
 import axios from "api/axios";
 interface UserState {
   user: UserInfo | null;

@@ -1,11 +1,12 @@
-import React from "react";
 import { Course, Response } from "types";
 import useCourseStore from "@store/course.store";
 import useAxiosPrivate from "@hooks/useAxiosPrivate";
-const CourseService = () => {
+import useProgramStore from "@store/program.store";
+
+const useCourseService = () => {
   const axios = useAxiosPrivate();
   const { courses, setCourse, addOne, removeOne, updateOne } = useCourseStore();
-
+  const { programs } = useProgramStore();
   const getCourses = () => {
     if (courses.length <= 0) {
       axios
@@ -28,7 +29,12 @@ const CourseService = () => {
       axios
         .post(`settings/courses`, data)
         .then((result) => {
-          addOne(result.data.course as Course);
+          const newCourse = result.data.course as Course;
+          newCourse.program = programs.find(
+            (p) => p._id === result.data.course.program
+          );
+
+          addOne(newCourse);
           resolve({ status: result.status, message: result.data.message });
         })
         .catch((err) => {
@@ -48,7 +54,7 @@ const CourseService = () => {
   const updateCourse = (id: string, data: Course) => {
     return new Promise<Response>((resolve, reject) => {
       axios
-        .put(`settings/course/${id}`, data)
+        .put(`settings/courses/${id}`, data)
         .then((result) => {
           const updateData = { ...data, _id: id };
           updateOne(updateData);
@@ -71,7 +77,7 @@ const CourseService = () => {
   const deletCourse = (id: string) => {
     return new Promise<Response>((resolve, reject) => {
       axios
-        .delete(`settings/course/${id}`)
+        .delete(`settings/courses/${id}`)
         .then((result) => {
           removeOne(id);
           resolve({ status: result.status, message: result.data.message });
@@ -93,4 +99,4 @@ const CourseService = () => {
   return { getCourses, addCourse, updateCourse, deletCourse };
 };
 
-export default CourseService;
+export default useCourseService;
