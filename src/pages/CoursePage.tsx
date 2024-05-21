@@ -71,8 +71,8 @@ const CoursePage: React.FC = () => {
                 const course = courses.find((prev) => prev._id === id);
                 setCourseId(course?._id as string);
                 form.setFieldValue("sem", course?.sem as string);
-                form.setFieldValue("description", course?.code as string);
-                form.setFieldValue("code", course?.description as string);
+                form.setFieldValue("description", course?.description as string);
+                form.setFieldValue("code", course?.code as string);
                 form.setFieldValue("programId", course?.program?._id as string);
                 open();
               }}
@@ -190,12 +190,12 @@ const CoursePage: React.FC = () => {
               {...form.getInputProps("programId")}
             />
             <TextInput
-              label="Name"
+              label="Course Code"
               placeholder="E.g. BSCS"
               {...form.getInputProps("code")}
             />
             <TextInput
-              label="Description"
+              label="Course Description"
               placeholder="E.g. Bachelor of Science in Computer Science"
               {...form.getInputProps("description")}
             />
