@@ -36,7 +36,6 @@ const useAuthStore = create<UserState>()(
               password: password,
             })
             .then((res) => {
-              console.log(res.data.user);
               if (res.data.user.role == "admin") {
                 const response: Response = {
                   status: res.status,

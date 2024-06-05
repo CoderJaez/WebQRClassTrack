@@ -22,8 +22,8 @@ const routes: Omit<Route, "leftSection" | "rightSection">[] = [
   { label: "Occupancy", path: "/occupancies", component: <OccupancyPage /> },
   { label: "Scheduling", path: "/scheduling", component: <SchedulingPage /> },
   {
-    label: "Reservations",
-    path: "/reservations",
+    label: "Calendar Schedules",
+    path: "/calendar-schedules",
     component: <ReservationSummary />,
   },
   { label: "Classrooms", path: "/classrooms", component: <ClassroomPage /> },
@@ -49,8 +49,8 @@ export const navLinks: Omit<Route, "component" | "rightSection">[] = [
     leftSection: <Chalkboard size="1rem" strokeWidth={1.5} />,
   },
   {
-    label: "Reservations",
-    path: "/reservations",
+    label: "Calendar Schedules",
+    path: "/calendar-schedules",
     leftSection: <FileStack size="1rem" strokeWidth={1.5} />,
   },
   {

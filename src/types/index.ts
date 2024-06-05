@@ -119,3 +119,15 @@ export interface SubjectSchedule {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface ClassroomSchedule {
+  classroom: Classroom,
+  schedules: [Schedule]
+}
+
+export interface Schedule {
+  day: string;
+  time_from: string;
+  time_to: string;
+  course: Course;
+}
